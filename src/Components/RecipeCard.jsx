@@ -16,12 +16,6 @@ const RecipeCard = recipe => {
           <div>
             <h3>{recipe.name}</h3>
           </div>
-          <div>
-            <p>{recipe.description}</p>
-          </div>
-          <div>
-            <p>{recipe.instructions}</p>
-          </div>
         </div>
       </CardWrapper>
     </Link>
@@ -37,8 +31,13 @@ const CardWrapper = styled.div`
   height: auto;
   cursor: pointer;
   position: relative;
-  border: #c0c0c0 solid 1px;
+  border: #f0f0f0 solid 1px;
+  box-shadow: 0 5px 5px #dcdcdc;
   border-radius: 7px;
+  &:hover {
+    color: white;
+    background-color: red;
+  }
 `;
 
 export const Image = styled.img`
@@ -48,6 +47,11 @@ export const Image = styled.img`
   object-fit: cover;
   border-radius: 5px;
   z-index: -1;
+  &:hover {
+    color: white;
+    background-color: red;
+    opacity: 0;
+  }
 `;
 
 // style = {{ borderTopLeftRadius: '5px',borderTopRightRadius: '5px' }}

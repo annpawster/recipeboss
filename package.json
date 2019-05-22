@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@bootstrap-styled/v4": "^3.0.15",
+    "axios": "^0.18.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-redux": "^7.0.3",
@@ -11,7 +12,8 @@
     "react-scripts": "3.0.1",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
-    "styled-components": "^4.2.0"
+    "styled-components": "^4.2.0",
+    "unsplash-js": "^5.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -33,5 +35,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.13.1"
   }
 }

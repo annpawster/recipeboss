@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-
 import RecipeIndex from './Components/RecipeIndex';
 import './App.css';
 import NavBar from './Components/NavBar';
@@ -9,6 +8,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import SingleRecipe from './Components/SingleRecipe';
 import AddRecipe from './Forms/AddRecipe';
 import EditRecipe from './Forms/AddRecipe';
+import styled from 'styled-components';
 
 const GlobalStyles = createGlobalStyle`
   body {
@@ -28,16 +28,20 @@ function App() {
     <Router>
       <div className="App">
         <GlobalStyles />
-        <NavBar />
+        <Column>
+          <NavBar />
+        </Column>
         <Switch>
           <Route exact path="/add" component={AddRecipe} />
           <Route exact path="/edit" component={EditRecipe} />
+          <Column>
+            <Route
+              exact
+              path="/"
+              render={props => <RecipeIndex recipes={recipes} />}
+            />
+          </Column>
 
-          <Route
-            exact
-            path="/"
-            render={props => <RecipeIndex recipes={recipes} />}
-          />
           <Route path="/:id" component={SingleRecipe} />
         </Switch>
       </div>
@@ -46,3 +50,7 @@ function App() {
 }
 
 export default App;
+
+export const Column = styled.div`
+display: flex
+flex-direction: column`;

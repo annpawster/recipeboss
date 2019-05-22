@@ -5,15 +5,17 @@ import sauceIcon from '../sauce.png';
 const NavBar = ({ links, ...props }) => {
   return (
     <Navigation>
-      {/* <Header> */}
-      <HeaderMenu>
-        <HeaderItem>
-          <Icon size="small" alt="sauce" src={sauceIcon} />
-        </HeaderItem>
-        <HeaderItem>Recipes</HeaderItem>
-        <HeaderItem>User@RecipeBoss.com</HeaderItem>
-      </HeaderMenu>
-      {/* </Header> */}
+      <Header>
+        <HeaderMenu>
+          <HeaderItem>
+            <Icon size="small" alt="sauce" src={sauceIcon} />
+          </HeaderItem>
+          <HeaderItem>Recipes</HeaderItem>
+          <HeaderItem>
+            Hello, <strong>User@RecipeBoss.com</strong>
+          </HeaderItem>
+        </HeaderMenu>
+      </Header>
     </Navigation>
   );
 };
@@ -26,16 +28,17 @@ const Navigation = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
+  z-index: 100;
 `;
 
 const Header = styled.header`
-  background-color: gray;
+  background-color: #c0c0c0;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  height: 30px;
-  box-shadow: 0 0 10px 0 black;
+  height: 50px;
+  border-radius: 2px;
 `;
 const HeaderMenu = styled.ul`
   margin-top: 0px;
@@ -48,6 +51,7 @@ const HeaderMenu = styled.ul`
 const HeaderItem = styled.li`
   padding: 0 10px 0 10px;
   text-align: center;
+  margin: 10px;
   box-sizing: border-box;
   list-style-type: none;
 `;

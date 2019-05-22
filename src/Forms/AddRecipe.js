@@ -1,16 +1,19 @@
 import React from 'react';
+import ImageSearch from './UnsplashSearch';
+import { connect } from 'react-redux';
+import { addingARecipe } from '../Store/reducer';
 import {
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
   Form,
   FormGroup,
   Label,
+  FormText,
   Input,
-  InputGroup,
-  InputGroupAddon,
-  Option,
-  Button,
 } from '@bootstrap-styled/v4';
-import { connect } from 'react-redux';
-import { addingARecipe } from '../Store/reducer';
 
 class AddRecipe extends React.Component {
   constructor() {
@@ -18,8 +21,11 @@ class AddRecipe extends React.Component {
     this.state = {
       name: '',
       description: '',
-      instructions: '',
-      image: '',
+      image:
+        '' ||
+        'https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1568&q=80',
+      searchImage: false,
+      addImage: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -37,58 +43,79 @@ class AddRecipe extends React.Component {
     const newRecipe = {
       name: this.state.name,
       description: this.state.description,
-      instructions: this.state.instructions,
       image: this.state.image,
     };
     this.props.addRecipe(newRecipe);
+    this.props.viewModal();
   }
-  render() {
-    console.log('what is this', this.props.state);
-    return (
-      <Form>
-        <FormGroup>
-          <Label htmlFor="inline-form-input">Name</Label>
-          <Input
-            type="text"
-            name="name"
-            value={this.state.name}
-            onChange={this.handleChange}
-          />
-        </FormGroup>
-        <FormGroup>
-          <Label hidden htmlFor="inline-form-input-group">
-            Description
-          </Label>
-          <Input
-            type="text"
-            name="description"
-            value={this.state.description}
-            onChange={this.handleChange}
-          />
-        </FormGroup>
-        <FormGroup>
-          <Label htmlFor="inline-form-input-group">Instructions</Label>
-          <Input
-            type="text"
-            name="instructions"
-            value={this.state.instructions}
-            onChange={this.handleChange}
-          />
-        </FormGroup>
 
-        <FormGroup>
-          <Label htmlFor="inline-form-input-group">Image</Label>
-          <Input
-            type="text"
-            name="image"
-            value={this.state.image}
-            onChange={this.handleChange}
-          />
-        </FormGroup>
-        <Button color="primary" type="submit" onClick={this.onSubmit}>
-          Submit
-        </Button>
-      </Form>
+  render() {
+    return (
+      <Modal isOpen={this.props.showModal}>
+        <ModalHeader>Add Recipe</ModalHeader>
+        <ModalBody>
+          Use the below form to add a new recipe to the database.
+          <Form>
+            <FormGroup>
+              <Label>Recipe Name</Label>
+              <Input
+                type="text"
+                name="name"
+                value={this.state.name}
+                onChange={this.handleChange}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label>Recipe Description</Label>
+              <Input
+                type="text"
+                name="description"
+                value={this.state.description}
+                onChange={this.handleChange}
+              />
+              <FormText color="muted">
+                Brief description of recipe you're adding.
+              </FormText>
+            </FormGroup>
+            <FormGroup>
+              <Label>Image</Label>
+              <Button
+                onClick={() =>
+                  this.setState({ searchImage: !this.searchImage })
+                }
+              >
+                Search for Image
+              </Button>
+              <Button
+                onClick={() => this.setState({ addImage: !this.addImage })}
+              >
+                Input URL
+              </Button>
+              {this.state.searchImage ? (
+                <ImageSearch />
+              ) : this.state.addImage ? (
+                <Input
+                  type="text"
+                  name="image"
+                  value={this.state.image}
+                  onChange={this.handleChange}
+                />
+              ) : null}
+              <FormText color="muted">
+                Brief description of recipe you're adding.
+              </FormText>
+            </FormGroup>
+          </Form>
+        </ModalBody>
+        <ModalFooter>
+          <Button color="primary" onClick={this.onSubmit}>
+            Submit New Recipe
+          </Button>
+          <Button color="secondary" onClick={this.props.viewModal}>
+            Cancel
+          </Button>
+        </ModalFooter>
+      </Modal>
     );
   }
 }
