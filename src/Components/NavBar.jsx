@@ -1,38 +1,61 @@
 import React from 'react';
 import styled from 'styled-components';
 import sauceIcon from '../sauce.png';
+import {
+  A,
+  Form,
+  Input,
+  Button,
+  Navbar,
+  Container,
+  NavbarBrand,
+  NavbarToggler,
+  Collapse,
+  Nav,
+  NavItem,
+  NavLink,
+} from '@bootstrap-styled/v4';
 
 const NavBar = ({ links, ...props }) => {
   return (
-    <Navigation>
-      <Header>
-        <HeaderMenu>
-          <HeaderItem>
-            <Icon size="small" alt="sauce" src={sauceIcon} />
-          </HeaderItem>
-          <HeaderItem>Recipes</HeaderItem>
-          <HeaderItem>
-            Hello, <strong>User@RecipeBoss.com</strong>
-          </HeaderItem>
-        </HeaderMenu>
-      </Header>
-    </Navigation>
+    <>
+      <Navbar color="faded" light toggleable="lg">
+        <Container>
+          <div className="d-flex justify-content-between">
+            <Nav navbar className="mr-auto">
+              <NavItem>
+                <NavLink>Recipes</NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink>Add Recipe</NavLink>
+              </NavItem>
+              <NavItem>
+                Hello, <strong>User@RecipeBoss.com</strong>
+              </NavItem>
+            </Nav>
+            {/* <Header>
+              <HeaderMenu>
+                <HeaderItem>
+                  <Icon size="small" alt="sauce" src={sauceIcon} />
+                </HeaderItem>
+                <HeaderItem>Recipes</HeaderItem>
+                <HeaderItem>
+                  Hello, <strong>User@RecipeBoss.com</strong>
+                </HeaderItem>
+              </HeaderMenu>
+            </Header> */}
+          </div>
+        </Container>
+      </Navbar>
+    </>
   );
 };
 export default NavBar;
 
 NavBar.displayName = 'NavBar';
 
-const Navigation = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  z-index: 100;
-`;
-
 const Header = styled.header`
-  background-color: #c0c0c0;
+  background-color: #f8f8f8;
   position: fixed;
   top: 0;
   left: 0;
