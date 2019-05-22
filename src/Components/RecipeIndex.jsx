@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { gettingAllRecipes } from '../Store/reducer';
 import AddRecipe from '../Forms/AddRecipe';
 
-const RecipeIndex = ({ recipes, ...props }) => {
+export const RecipeIndex = ({ recipes, ...props }) => {
   const [showModal, setShowModal] = useState(false);
   useEffect(() => {
     props.grabAllRecipes();
@@ -17,9 +17,7 @@ const RecipeIndex = ({ recipes, ...props }) => {
     setShowModal(!showModal);
   };
 
-  props.state
-    ? (recipes = recipes.concat(props.state))
-    : (recipes = props.recipes);
+  props.state ? (recipes = recipes.concat(props.state)) : (recipes = recipes);
 
   return (
     <Background>
