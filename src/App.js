@@ -6,8 +6,6 @@ import recipeData from './Components/recipes';
 import { createGlobalStyle } from 'styled-components';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import SingleRecipe from './Components/SingleRecipe';
-import AddRecipe from './Forms/AddRecipe';
-import EditRecipe from './Forms/AddRecipe';
 import styled from 'styled-components';
 
 const GlobalStyles = createGlobalStyle`
@@ -32,17 +30,14 @@ function App() {
           <NavBar />
         </Column>
         <Switch>
-          <Route exact path="/add" component={AddRecipe} />
-          <Route exact path="/edit" component={EditRecipe} />
           <Column>
             <Route
               exact
               path="/"
               render={props => <RecipeIndex recipes={recipes} />}
             />
+            <Route path="/recipes/:id" component={SingleRecipe} />
           </Column>
-
-          <Route path="/:id" component={SingleRecipe} />
         </Switch>
       </div>
     </Router>

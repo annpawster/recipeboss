@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import RecipeCard from './RecipeCard';
 import styled from 'styled-components';
-// import { Button } from '@bootstrap-styled/v4';
+import { Button } from '@bootstrap-styled/v4';
 import { connect } from 'react-redux';
 import { gettingAllRecipes } from '../Store/reducer';
 import AddRecipe from '../Forms/AddRecipe';
@@ -11,20 +11,26 @@ export const RecipeIndex = ({ recipes, ...props }) => {
   const [showModal, setShowModal] = useState(false);
   useEffect(() => {
     props.grabAllRecipes();
-  });
+  }, []);
 
   const viewModal = () => {
     setShowModal(!showModal);
   };
-
-  props.state ? (recipes = recipes.concat(props.state)) : (recipes = recipes);
+  let allRecipes;
+  props.state[0]
+    ? (allRecipes = recipes.concat(props.state))
+    : (allRecipes = recipes);
 
   return (
     <Background>
       <HomeWrapper>
         <Container>
           <Welcome>Welcome to Recipe Boss!</Welcome>
-          <Button onClick={viewModal}>Add a Recipe</Button>
+          <ButtonWrapper>
+            <Button onClick={viewModal} color="info">
+              Add a Recipe
+            </Button>
+          </ButtonWrapper>
           {showModal ? (
             <AddRecipe showModal={showModal} viewModal={viewModal} />
           ) : null}
@@ -35,7 +41,7 @@ export const RecipeIndex = ({ recipes, ...props }) => {
           <p>Welcome to Recipe Boss!</p>
         </Container>
         <CardWrapper>
-          {recipes.map((recipe, index) => (
+          {allRecipes.map((recipe, index) => (
             <RecipeCard id={index} {...recipe} key={index} />
           ))}
         </CardWrapper>
@@ -60,25 +66,15 @@ export const Background = styled.div`
   background: white;
 `;
 
-export const Button = styled.button`
-  font-size: 1em;
+export const ButtonWrapper = styled.div`
   margin: 1em;
   padding: 15px 45px;
-  border-radius: 3px;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: #555;
-  color: white;
+  background-color: transparent;
   border: none;
-  cursor: pointer;
-  text-align: center;
-  box-shadow: 0 5px 10px #777;
-  &:hover {
-    color: white;
-    background-color: red;
-  }
 `;
 
 const Container = styled.div`

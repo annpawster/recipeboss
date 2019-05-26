@@ -1,9 +1,143 @@
 import React from 'react';
+import { editingARecipe } from '../Store/reducer';
+import { connect } from 'react-redux';
+import {
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Form,
+  FormGroup,
+  Label,
+  FormText,
+  Input,
+  FormFeedback,
+} from '@bootstrap-styled/v4';
+import styled from 'styled-components';
+import ImageSearch from './BingSearch';
 
 class EditRecipe extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: '' || this.props.recipeInfo.name,
+      description: '' || this.props.recipeInfo.description,
+      instructions: '' || this.props.recipeInfo.instructions,
+      image: '' || this.props.recipeInfo.image,
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  handleChange(event) {
+    event.preventDefault();
+    console.log('what is the event target in handleChange??', event.target);
+    this.setState({
+      [event.target.name]: event.target.value || event.target.src,
+    });
+  }
+
+  onSubmit(event) {
+    event.preventDefault();
+
+    console.log('before the change', this.state);
+    const editedRecipe = {
+      name: this.state.name,
+      description: this.state.description,
+      image: this.state.image,
+    };
+
+    console.log('this is the edited version', editedRecipe);
+    this.props.edit(editedRecipe);
+    this.props.viewModal();
+  }
+
   render() {
-    return <div>Helloooo, edit mmmeeeeee</div>;
+    console.log('what is my props?', this.props);
+    return (
+      <Modal isOpen={this.props.showModal}>
+        <ModalHeader>Edit {this.props.recipeInfo.name}</ModalHeader>
+        <ModalBody>
+          Use the below form to make updates to this recipe in the database.
+        </ModalBody>
+        <ModalBody>
+          <Form>
+            <FormGroup>
+              <Label>Recipe Name</Label>
+              <InputWrapper>
+                <Input
+                  type="text"
+                  name="name"
+                  value={this.state.name}
+                  onChange={this.handleChange}
+                />
+              </InputWrapper>
+            </FormGroup>
+            <FormGroup>
+              <Label>Recipe Description</Label>
+              <InputWrapper>
+                <Input
+                  type="text"
+                  name="description"
+                  value={this.state.description}
+                  onChange={this.handleChange}
+                />
+              </InputWrapper>
+            </FormGroup>
+            <FormGroup>
+              <Label>Recipe Instructions</Label>
+              <InputWrapper>
+                <Input
+                  type="text"
+                  name="instructions"
+                  value={this.state.instructions}
+                  onChange={this.handleChange}
+                />
+              </InputWrapper>
+            </FormGroup>
+            <FormGroup>
+              <Label>Recipe Image</Label>
+              <InputWrapper>
+                <ImageSearch
+                  handleChange={this.handleChange}
+                  search={this.state.name}
+                />
+              </InputWrapper>
+            </FormGroup>
+          </Form>
+        </ModalBody>
+        <ModalFooter>
+          <Button color="info" onClick={this.onSubmit}>
+            Submit Changes
+          </Button>
+          <Button color="secondary" onClick={this.props.viewModal}>
+            Cancel
+          </Button>
+        </ModalFooter>
+      </Modal>
+    );
   }
 }
 
-export default EditRecipe;
+const mapStateToProps = state => ({
+  state: state,
+});
+
+const mapDispatchToProps = dispatch => ({
+  edit: editedRecipe => dispatch(editingARecipe(editedRecipe)),
+});
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(EditRecipe);
+
+const InputWrapper = styled.div`
+  width: 75%;
+`;
+
+export const ButtonWrapper = styled.div`
+  padding: 15px;
+  background: white;
+  border: 0px;
+`;

@@ -37,7 +37,7 @@ class AddRecipe extends React.Component {
 
   handleChange(event) {
     event.preventDefault();
-    console.log('what is the event coming from search', event.target);
+    console.log('what is the event coming from search', event.target.src);
     this.setState({
       [event.target.name]: event.target.value || event.target.src,
     });
@@ -45,11 +45,13 @@ class AddRecipe extends React.Component {
 
   onSubmit(event) {
     event.preventDefault();
+
     const newRecipe = {
       name: this.state.name,
       description: this.state.description,
       image: this.state.image,
     };
+    console.log('this is the new recipe', newRecipe);
     this.props.addRecipe(newRecipe);
     this.props.viewModal();
   }
@@ -99,7 +101,7 @@ class AddRecipe extends React.Component {
               <ButtonWrapper>
                 <Button outline color="info" onClick={this.handleSearch}>
                   Select Image
-                </Button>{' '}
+                </Button>
                 <FormText color="muted">
                   Select an image from the database.
                 </FormText>
@@ -178,7 +180,7 @@ const InputWrapper = styled.div`
   width: 75%;
 `;
 
-const ButtonWrapper = styled.div`
+export const ButtonWrapper = styled.div`
   padding: 15px;
   background: white;
   border: 0px;
