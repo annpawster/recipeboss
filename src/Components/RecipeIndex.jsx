@@ -108,7 +108,7 @@ const Welcome = styled.div`
   transform: translate(-50%, -50%);
 `;
 
-const CardWrapper = styled.div`
+export const CardWrapper = styled.div`
   display: flex;
   flex-flow: row wrap;
   justify-content: space-around;
