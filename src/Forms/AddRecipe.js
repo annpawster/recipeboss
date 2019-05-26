@@ -61,7 +61,6 @@ class AddRecipe extends React.Component {
   }
 
   render() {
-    console.log('this.state.searchImage', this.state.searchImage);
     return (
       <Modal isOpen={this.props.showModal}>
         <ModalHeader>Add Recipe</ModalHeader>
