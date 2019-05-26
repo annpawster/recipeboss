@@ -1,10 +1,11 @@
-import axios from 'axios';
+import recipeData from '../Components/recipes';
 
 //Action Types
 const GET_ALL_RECIPES = 'GET_ALL_RECIPES';
 const DELETE_RECIPE = 'DELETE_RECIPE';
 const ADD_RECIPE = 'ADD_RECIPE';
 const EDIT_RECIPE = 'EDIT_RECIPE';
+const GET_SINGLE_RECIPE = 'GET_SINGLE_RECIPE';
 
 //Action Creator
 const getRecipes = recipes => {
@@ -20,14 +21,18 @@ const editRecipe = recipe => {
   return { type: EDIT_RECIPE, recipe };
 };
 
-const deleteRecipe = recipe => {
-  return { type: DELETE_RECIPE, recipe };
+const deleteRecipe = id => {
+  return { type: DELETE_RECIPE, id };
+};
+
+const getSingleRecipe = id => {
+  return { type: GET_SINGLE_RECIPE, id };
 };
 
 //Thunk
-export const gettingAllRecipes = recipes => dispatch => {
+export const gettingAllRecipes = () => dispatch => {
   try {
-    dispatch(getRecipes(recipes));
+    dispatch(getRecipes(recipeData));
   } catch (err) {
     console.log('Ran into an error grabbing all recipes', err);
   }
@@ -50,27 +55,38 @@ export const editingARecipe = recipe => dispatch => {
   }
 };
 
-export const deletingRecipe = recipe => dispatch => {
+export const deletingRecipe = id => dispatch => {
   try {
-    dispatch(deleteRecipe(recipe));
+    dispatch(deleteRecipe(id));
   } catch (err) {
     console.log('Ran into an error deleting a recipe', err);
+  }
+};
+
+export const gettingSingleRecipe = id => dispatch => {
+  try {
+    dispatch(getSingleRecipe(id));
+  } catch (err) {
+    console.log('Ran into an error getting a single recipe', err);
   }
 };
 
 //State
 const initialState = {
   recipes: [],
+  singleRecipe: {},
 };
 
 //Reducer
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_ALL_RECIPES:
-      return {
-        ...state,
-        recipes: [action.recipes],
-      };
+      if (state.recipes.length > 0) return { ...state };
+      else {
+        return {
+          recipes: action.recipes,
+        };
+      }
     case ADD_RECIPE:
       if (state.recipes[0]) {
         return { recipes: [...state.recipes, action.recipe] };
@@ -83,9 +99,20 @@ const reducer = (state = initialState, action) => {
       const filtered = state.recipes.filter(rec => {
         return action.recipe.id !== rec.id;
       });
-      return { ...state, recipes: [filtered, action.recipe] };
+      return {
+        recipes: filtered.concat(action.recipe),
+        singleRecipe: action.recipe,
+      };
     case DELETE_RECIPE:
-      return state;
+      const allButDeleted = state.recipes.filter(rec => {
+        return action.id !== rec.id;
+      });
+      return { recipes: allButDeleted, singleRecipe: {} };
+    case GET_SINGLE_RECIPE:
+      const [single] = state.recipes.filter(rec => {
+        return action.id === rec.id;
+      });
+      return { ...state, singleRecipe: single };
     default:
       return state;
   }

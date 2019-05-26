@@ -9,6 +9,7 @@ import AddRecipe from '../Forms/AddRecipe';
 
 export const RecipeIndex = ({ recipes, ...props }) => {
   const [showModal, setShowModal] = useState(false);
+  const { state } = props.state;
   useEffect(() => {
     props.grabAllRecipes();
   }, []);
@@ -16,11 +17,8 @@ export const RecipeIndex = ({ recipes, ...props }) => {
   const viewModal = () => {
     setShowModal(!showModal);
   };
-  let allRecipes;
-  props.state[0]
-    ? (allRecipes = recipes.concat(props.state))
-    : (allRecipes = recipes);
-
+  const allRecipes = props.state;
+  console.log('these are all the recipes', allRecipes);
   return (
     <Background>
       <HomeWrapper>
@@ -32,7 +30,11 @@ export const RecipeIndex = ({ recipes, ...props }) => {
             </Button>
           </ButtonWrapper>
           {showModal ? (
-            <AddRecipe showModal={showModal} viewModal={viewModal} />
+            <AddRecipe
+              showModal={showModal}
+              viewModal={viewModal}
+              id={allRecipes.length}
+            />
           ) : null}
           <HomePageImage
             src="https://cdn.pixabay.com/photo/2018/10/01/12/04/cookbook-3716009_1280.jpg"
@@ -41,9 +43,13 @@ export const RecipeIndex = ({ recipes, ...props }) => {
           <p>Welcome to Recipe Boss!</p>
         </Container>
         <CardWrapper>
-          {allRecipes.map((recipe, index) => (
-            <RecipeCard id={index} {...recipe} key={index} />
-          ))}
+          {allRecipes
+            ? allRecipes.map((recipe, index) =>
+                recipe && recipe.length !== 0 ? (
+                  <RecipeCard id={index} {...recipe} key={index} />
+                ) : null
+              )
+            : 'Loading...'}
         </CardWrapper>
       </HomeWrapper>
     </Background>

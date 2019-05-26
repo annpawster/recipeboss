@@ -46,6 +46,8 @@ class EditRecipe extends React.Component {
       name: this.state.name,
       description: this.state.description,
       image: this.state.image,
+      instructions: this.state.instructions,
+      id: this.props.recipeInfo.id,
     };
 
     console.log('this is the edited version', editedRecipe);

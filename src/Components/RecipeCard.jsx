@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Button } from '@bootstrap-styled/v4';
 import { ButtonWrapper } from '../Forms/AddRecipe';
+import { connect } from 'react-redux';
+import { deletingRecipe } from '../Store/reducer';
 
 const RecipeCard = recipe => {
   return (
@@ -15,7 +17,7 @@ const RecipeCard = recipe => {
         <Link
           to={{
             pathname: `/recipes/${recipe.name}`,
-            state: recipe,
+            state: recipe.id,
           }}
         >
           <ButtonWrapper>
@@ -23,7 +25,11 @@ const RecipeCard = recipe => {
           </ButtonWrapper>
         </Link>
         <ButtonWrapper>
-          <Button outline color="danger">
+          <Button
+            outline
+            color="danger"
+            onClick={() => recipe.delete(recipe.id)}
+          >
             Delete
           </Button>
         </ButtonWrapper>
@@ -32,7 +38,14 @@ const RecipeCard = recipe => {
   );
 };
 
-export default RecipeCard;
+const mapDispatchToProps = dispatch => ({
+  delete: id => dispatch(deletingRecipe(id)),
+});
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(RecipeCard);
 
 const CardWrapper = styled.div`
   margin-top: 25px;

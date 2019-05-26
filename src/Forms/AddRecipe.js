@@ -50,6 +50,7 @@ class AddRecipe extends React.Component {
       name: this.state.name,
       description: this.state.description,
       image: this.state.image,
+      id: this.props.id,
     };
     console.log('this is the new recipe', newRecipe);
     this.props.addRecipe(newRecipe);
