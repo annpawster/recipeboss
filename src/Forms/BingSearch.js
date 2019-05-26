@@ -24,7 +24,7 @@ class ImageSearch extends React.Component {
         method: 'get',
         url: queryurl,
         headers: {
-          'Ocp-Apim-Subscription-Key': process.env.REACT_APP_KEY1,
+          'Ocp-Apim-Subscription-Key': process.env.REACT_APP_KEY_2,
           Accept: 'application/json',
         },
       });

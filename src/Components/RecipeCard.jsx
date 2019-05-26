@@ -1,28 +1,51 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { Button } from '@bootstrap-styled/v4';
+import { ButtonWrapper } from '../Forms/AddRecipe';
+import { connect } from 'react-redux';
+import { deletingRecipe } from '../Store/reducer';
 
 const RecipeCard = recipe => {
   return (
-    <Link
-      to={{
-        pathname: `/${recipe.name}`,
-        state: recipe,
-      }}
-    >
-      <CardWrapper>
-        <Image src={recipe.image} />
-        <div>
-          <div>
-            <h3>{recipe.name}</h3>
-          </div>
-        </div>
-      </CardWrapper>
-    </Link>
+    <CardWrapper>
+      <div>
+        <h3>{recipe.name}</h3>
+      </div>
+      <Image src={recipe.image} />
+      <div>
+        <Link
+          to={{
+            pathname: `/recipes/${recipe.name}`,
+            state: recipe.id,
+          }}
+        >
+          <ButtonWrapper>
+            <Button color="info">View/Edit</Button>
+          </ButtonWrapper>
+        </Link>
+        <ButtonWrapper>
+          <Button
+            outline
+            color="danger"
+            onClick={() => recipe.delete(recipe.id)}
+          >
+            Delete
+          </Button>
+        </ButtonWrapper>
+      </div>
+    </CardWrapper>
   );
 };
 
-export default RecipeCard;
+const mapDispatchToProps = dispatch => ({
+  delete: id => dispatch(deletingRecipe(id)),
+});
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(RecipeCard);
 
 const CardWrapper = styled.div`
   margin-top: 25px;
@@ -34,10 +57,6 @@ const CardWrapper = styled.div`
   border: #f0f0f0 solid 1px;
   box-shadow: 0 5px 5px #dcdcdc;
   border-radius: 7px;
-  &:hover {
-    color: white;
-    background-color: red;
-  }
 `;
 
 export const Image = styled.img`
@@ -47,11 +66,4 @@ export const Image = styled.img`
   object-fit: cover;
   border-radius: 5px;
   z-index: -1;
-  &:hover {
-    color: white;
-    background-color: red;
-    opacity: 0;
-  }
 `;
-
-// style = {{ borderTopLeftRadius: '5px',borderTopRightRadius: '5px' }}
