@@ -21,11 +21,10 @@ class ImageSearch extends React.Component {
     const queryurl = `https://api.cognitive.microsoft.com/bing/v7.0/images/search?q=${query}`;
     try {
       const { data } = await axios({
-        method: 'get', //you can set what request you want to be
+        method: 'get',
         url: queryurl,
-        data: { url: queryurl },
         headers: {
-          'Ocp-Apim-Subscription-Key': '9af9b804ec6e46448c0a9952a692a9cc',
+          'Ocp-Apim-Subscription-Key': process.env.REACT_APP_KEY1,
           Accept: 'application/json',
         },
       });
@@ -50,14 +49,15 @@ class ImageSearch extends React.Component {
           while (index < 9) {
             return (
               <Button onClick={this.props.handleChange} key={index}>
-                <Image src={image} name="image" alt="Image" />
+                <Image src={image} name="image" alt={this.props.search} />
               </Button>
             );
           }
+          return null;
         })}
       </CardWrapper>
     ) : (
-      'Did not work'
+      'Loading images...'
     );
   }
 }
