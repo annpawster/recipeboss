@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { deletingRecipe } from '../Store/reducer';
 
-const RecipeList = recipe => {
+export const RecipeList = recipe => {
   return (
     <ListGroupItem className="justify-content-between">
       <Col lg="5">

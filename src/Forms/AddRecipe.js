@@ -29,12 +29,14 @@ class AddRecipe extends React.Component {
       searchImage: false,
       addImage: false,
       showAlert: false,
+      notSubmitted: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
     this.handleAlert = this.handleAlert.bind(this);
+    this.notSubmitted = this.notSubmitted.bind(this);
   }
 
   handleChange(event) {
@@ -65,6 +67,12 @@ class AddRecipe extends React.Component {
   handleAlert() {
     this.setState({
       showAlert: !this.state.showAlert,
+    });
+  }
+
+  notSubmitted() {
+    this.setState({
+      notSubmitted: !this.state.notSubmitted,
     });
   }
 
@@ -174,9 +182,23 @@ class AddRecipe extends React.Component {
           </Form>
         </ModalBody>
         <ModalFooter>
-          <Button color="info" onClick={this.onSubmit}>
+          {this.state.notSubmitted ? (
+            <Alert color="danger" uncontrolled>
+              Please make sure you've added a recipe name and image before
+              submitting edits.
+            </Alert>
+          ) : null}
+          <Button
+            color="info"
+            onClick={
+              this.state.name && this.state.image
+                ? this.onSubmit
+                : this.notSubmitted
+            }
+          >
             Submit New Recipe
           </Button>
+
           <Button color="secondary" onClick={this.props.viewModal}>
             Cancel
           </Button>
