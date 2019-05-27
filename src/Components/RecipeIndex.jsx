@@ -6,9 +6,13 @@ import { Button } from '@bootstrap-styled/v4';
 import { connect } from 'react-redux';
 import { gettingAllRecipes } from '../Store/reducer';
 import AddRecipe from '../Forms/AddRecipe';
+import { Link } from 'react-router-dom';
+import RecipeList from './RecipeList';
 
 export const RecipeIndex = ({ recipes, ...props }) => {
   const [showModal, setShowModal] = useState(false);
+  const [listView, setlistView] = useState('grid');
+
   const { state } = props.state;
   useEffect(() => {
     props.grabAllRecipes();
@@ -17,18 +21,29 @@ export const RecipeIndex = ({ recipes, ...props }) => {
   const viewModal = () => {
     setShowModal(!showModal);
   };
+
+  const viewMode = mode => {
+    setlistView(mode);
+  };
+
   const allRecipes = props.state;
   console.log('these are all the recipes', allRecipes);
   return (
     <Background>
       <HomeWrapper>
         <Container>
-          <Welcome>Welcome to Recipe Boss!</Welcome>
+          <Welcome>
+            Welcome to Recipe Boss, <strong>User@RecipeBoss.com</strong>!
+          </Welcome>
           <ButtonWrapper>
             <Button onClick={viewModal} color="info">
               Add a Recipe
             </Button>
           </ButtonWrapper>
+          <LinkWrapper>
+            <Link onClick={() => viewMode('list')}>List View </Link>||
+            <Link onClick={() => viewMode('grid')}>Grid View</Link>
+          </LinkWrapper>
           {showModal ? (
             <AddRecipe
               showModal={showModal}
@@ -46,7 +61,11 @@ export const RecipeIndex = ({ recipes, ...props }) => {
           {allRecipes
             ? allRecipes.map((recipe, index) =>
                 recipe && recipe.length !== 0 ? (
-                  <RecipeCard id={index} {...recipe} key={index} />
+                  listView === 'grid' ? (
+                    <RecipeCard id={index} {...recipe} key={index} />
+                  ) : (
+                    <RecipeList />
+                  )
                 ) : null
               )
             : 'Loading...'}
@@ -72,12 +91,22 @@ export const Background = styled.div`
   background: white;
 `;
 
+const LinkWrapper = styled.div`
+  padding: 15px 45px;
+  position: absolute;
+  bottom: 0%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: transparent;
+`;
+
 export const ButtonWrapper = styled.div`
   margin: 1em;
   padding: 15px 45px;
   position: absolute;
   top: 50%;
   left: 50%;
+  cursor: pointer;
   transform: translate(-50%, -50%);
   background-color: transparent;
   border: none;
