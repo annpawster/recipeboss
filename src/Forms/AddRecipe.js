@@ -13,7 +13,7 @@ import {
   Label,
   FormText,
   Input,
-  FormFeedback,
+  Alert,
 } from '@bootstrap-styled/v4';
 import styled from 'styled-components';
 
@@ -28,16 +28,17 @@ class AddRecipe extends React.Component {
         'https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1568&q=80',
       searchImage: false,
       addImage: false,
+      showAlert: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
+    this.handleAlert = this.handleAlert.bind(this);
   }
 
   handleChange(event) {
     event.preventDefault();
-    console.log('what is the event coming from search', event.target.src);
     this.setState({
       [event.target.name]: event.target.value || event.target.src,
     });
@@ -52,7 +53,6 @@ class AddRecipe extends React.Component {
       image: this.state.image,
       id: this.props.id,
     };
-    console.log('this is the new recipe', newRecipe);
     this.props.addRecipe(newRecipe);
     this.props.viewModal();
   }
@@ -60,6 +60,11 @@ class AddRecipe extends React.Component {
   handleSearch() {
     this.setState({
       searchImage: !this.state.searchImage,
+    });
+  }
+  handleAlert() {
+    this.setState({
+      showAlert: !this.state.showAlert,
     });
   }
 
@@ -99,26 +104,6 @@ class AddRecipe extends React.Component {
             </FormGroup>
             <FormGroup>
               <Label>Recipe Image</Label>
-              <ButtonWrapper>
-                <Button outline color="info" onClick={this.handleSearch}>
-                  Select Image
-                </Button>
-                <FormText color="muted">
-                  Select an image from the database.
-                </FormText>
-              </ButtonWrapper>
-              <ButtonWrapper>
-                <Button
-                  outline
-                  color="info"
-                  onClick={() =>
-                    this.setState({ addImage: !this.state.addImage })
-                  }
-                >
-                  Input URL
-                </Button>
-                <FormText color="muted">Find an image URL and add it.</FormText>
-              </ButtonWrapper>
               {this.state.searchImage ? (
                 this.state.name.length > 1 ? (
                   <>
@@ -132,9 +117,9 @@ class AddRecipe extends React.Component {
                   </>
                 ) : (
                   ((
-                    <FormFeedback state="warning">
+                    <FormText color="muted">
                       Please add in a recipe name
-                    </FormFeedback>
+                    </FormText>
                   ),
                   this.handleSearch())
                 )
@@ -147,7 +132,44 @@ class AddRecipe extends React.Component {
                     onChange={this.handleChange}
                   />
                 </InputWrapper>
-              ) : null}
+              ) : (
+                <>
+                  <ButtonWrapper>
+                    <Button
+                      outline
+                      color="info"
+                      onClick={
+                        this.state.name ? this.handleSearch : this.handleAlert
+                      }
+                    >
+                      Select Image
+                    </Button>
+                    {this.state.showAlert ? (
+                      <Alert color="danger" uncontrolled>
+                        Please add a recipe name before searching.
+                      </Alert>
+                    ) : (
+                      <FormText color="muted">
+                        Select an image from the database.
+                      </FormText>
+                    )}
+                  </ButtonWrapper>
+                  <ButtonWrapper>
+                    <Button
+                      outline
+                      color="info"
+                      onClick={() =>
+                        this.setState({ addImage: !this.state.addImage })
+                      }
+                    >
+                      Input URL
+                    </Button>
+                    <FormText color="muted">
+                      Find an image URL and add it.
+                    </FormText>
+                  </ButtonWrapper>
+                </>
+              )}
             </FormGroup>
           </Form>
         </ModalBody>

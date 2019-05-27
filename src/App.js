@@ -16,12 +16,6 @@ const GlobalStyles = createGlobalStyle`
 `;
 
 function App() {
-  const [recipes, setRecipes] = useState([]);
-
-  useEffect(() => {
-    setRecipes(recipeData);
-  }, []);
-
   return (
     <Router>
       <div className="App">
@@ -31,11 +25,7 @@ function App() {
         </Column>
         <Switch>
           <Column>
-            <Route
-              exact
-              path="/"
-              render={props => <RecipeIndex recipes={recipes} />}
-            />
+            <Route exact path="/" render={() => <RecipeIndex />} />
             <Route path="/recipes/:id" component={SingleRecipe} />
           </Column>
         </Switch>

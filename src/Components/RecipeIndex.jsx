@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-
 import RecipeCard from './RecipeCard';
 import styled from 'styled-components';
 import { Button, ListGroup } from '@bootstrap-styled/v4';
@@ -13,7 +12,6 @@ export const RecipeIndex = ({ recipes, ...props }) => {
   const [showModal, setShowModal] = useState(false);
   const [listView, setlistView] = useState('grid');
 
-  const { state } = props.state;
   useEffect(() => {
     props.grabAllRecipes();
   }, []);
@@ -27,8 +25,7 @@ export const RecipeIndex = ({ recipes, ...props }) => {
   };
 
   const allRecipes = props.state;
-  let format;
-  listView === 'grid' ? (format = '') : (format = 'list-group');
+
   return (
     <Background>
       <HomeWrapper>
@@ -60,15 +57,9 @@ export const RecipeIndex = ({ recipes, ...props }) => {
         {listView === 'grid' ? (
           <CardWrapper>
             {allRecipes
-              ? allRecipes.map((recipe, index) =>
-                  recipe && recipe.length !== 0 ? (
-                    listView === 'grid' ? (
-                      <RecipeCard id={index} {...recipe} key={index} />
-                    ) : (
-                      <RecipeList id={index} {...recipe} key={index} />
-                    )
-                  ) : null
-                )
+              ? allRecipes.map((recipe, index) => (
+                  <RecipeCard id={index} {...recipe} key={index} />
+                ))
               : 'Loading...'}
           </CardWrapper>
         ) : (
@@ -92,6 +83,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   grabAllRecipes: () => dispatch(gettingAllRecipes()),
 });
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps
@@ -101,15 +93,20 @@ export const Background = styled.div`
   background: white;
 `;
 
-const StyledLink = styled(Link)`
+const StyledLink = styled.a`
   text-decoration: none;
   color: #282828;
   &:hover {
     color: #00ccff;
   }
 
-  &:focus,
-  &:active {
+  &.active {
+    color: #0099cc;
+    text-decoration: underline;
+    font-size: 20px;
+  }
+
+  &:visited {
     color: #0099cc;
     text-decoration: underline;
     font-size: 20px;

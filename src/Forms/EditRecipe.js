@@ -10,9 +10,7 @@ import {
   Form,
   FormGroup,
   Label,
-  FormText,
   Input,
-  FormFeedback,
 } from '@bootstrap-styled/v4';
 import styled from 'styled-components';
 import ImageSearch from './BingSearch';
@@ -32,7 +30,6 @@ class EditRecipe extends React.Component {
 
   handleChange(event) {
     event.preventDefault();
-    console.log('what is the event target in handleChange??', event.target);
     this.setState({
       [event.target.name]: event.target.value || event.target.src,
     });
@@ -40,8 +37,6 @@ class EditRecipe extends React.Component {
 
   onSubmit(event) {
     event.preventDefault();
-
-    console.log('before the change', this.state);
     const editedRecipe = {
       name: this.state.name,
       description: this.state.description,
@@ -50,13 +45,11 @@ class EditRecipe extends React.Component {
       id: this.props.recipeInfo.id,
     };
 
-    console.log('this is the edited version', editedRecipe);
     this.props.edit(editedRecipe);
     this.props.viewModal();
   }
 
   render() {
-    console.log('what is my props?', this.props);
     return (
       <Modal isOpen={this.props.showModal}>
         <ModalHeader>Edit {this.props.recipeInfo.name}</ModalHeader>
