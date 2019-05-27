@@ -1,14 +1,14 @@
 import recipeData from '../Components/recipes';
 
 //Action Types
-const GET_ALL_RECIPES = 'GET_ALL_RECIPES';
+export const GET_ALL_RECIPES = 'GET_ALL_RECIPES';
 const DELETE_RECIPE = 'DELETE_RECIPE';
 const ADD_RECIPE = 'ADD_RECIPE';
 const EDIT_RECIPE = 'EDIT_RECIPE';
 const GET_SINGLE_RECIPE = 'GET_SINGLE_RECIPE';
 
 //Action Creator
-const getRecipes = recipes => {
+export const getRecipes = recipes => {
   return { type: GET_ALL_RECIPES, recipes };
 };
 

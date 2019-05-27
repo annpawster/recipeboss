@@ -5,7 +5,6 @@ import { Button, ListGroup } from '@bootstrap-styled/v4';
 import { connect } from 'react-redux';
 import { gettingAllRecipes } from '../Store/reducer';
 import AddRecipe from '../Forms/AddRecipe';
-import { Link } from 'react-router-dom';
 import RecipeList from './RecipeList';
 
 export const RecipeIndex = ({ recipes, ...props }) => {
@@ -53,7 +52,9 @@ export const RecipeIndex = ({ recipes, ...props }) => {
             alt="homepagesalad"
           />
         </Container>
-        <strong>You have a total of {allRecipes.length} recipes!</strong>
+        {allRecipes ? (
+          <strong>You have a total of {allRecipes.length} recipes!</strong>
+        ) : null}
         {listView === 'grid' ? (
           <CardWrapper>
             {allRecipes
@@ -112,6 +113,7 @@ const StyledLink = styled.a`
     font-size: 20px;
   }
 `;
+StyledLink.displayName = 'StyledLink';
 
 const LinkWrapper = styled.div`
   padding: 15px 45px;
@@ -132,6 +134,7 @@ export const ButtonWrapper = styled(Button)`
   background-color: transparent;
   border: none;
 `;
+ButtonWrapper.displayName = 'ButtonWrapper';
 
 const Container = styled.div`
   margin-top: 50px;

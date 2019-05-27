@@ -1,16 +1,10 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { RecipeIndex } from '../Components/RecipeIndex';
-import { shallow, configure } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import { getRecipes, GET_ALL_RECIPES } from '../Store/reducer';
 const chai = require('chai');
 const expect = chai.expect;
 const chaiThings = require('chai-things');
 chai.use(chaiThings);
 
-configure({ adapter: new Adapter() });
-
-describe('A suite', function() {
+describe('getRecipes action creator', () => {
   let recipes = [
     {
       name: "Giada's Lasagna",
@@ -40,18 +34,16 @@ describe('A suite', function() {
         'https://upload.wikimedia.org/wikipedia/commons/a/a6/Chicken_piccata_dinner_cooking_food.jpg',
     },
   ];
+  const getRecipesAction = getRecipes(recipes);
 
-  const wrapper = shallow(<RecipeIndex state={recipes} />);
-
-  it('should render without throwing an error', function() {
-    expect(wrapper.exists()).to.equal(true);
+  it('returns an object', () => {
+    expect(typeof getRecipesAction).to.equal('object');
+    expect(Object.getPrototypeOf(getRecipesAction)).to.equal(Object.prototype);
   });
 
-  it('renders the correct amount of Buttons', function() {
-    expect(wrapper.find('ButtonWrapper')).to.have.length(1);
-  });
-
-  it('renders the the List and Grid links', function() {
-    expect(wrapper.find('StyledLink')).to.have.length(2);
+  it('creates an object with `type` and `recipes`', () => {
+    expect(getRecipesAction.type).to.equal(GET_ALL_RECIPES);
+    expect(Array.isArray(getRecipesAction.recipes)).to.be.true;
+    expect(getRecipesAction.recipes[3].name).to.equal('Chicken Picatta');
   });
 });

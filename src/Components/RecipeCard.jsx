@@ -6,7 +6,7 @@ import { ButtonWrapper } from '../Forms/AddRecipe';
 import { connect } from 'react-redux';
 import { deletingRecipe } from '../Store/reducer';
 
-const RecipeCard = recipe => {
+export const RecipeCard = recipe => {
   return (
     <CardWrapper>
       <div>
@@ -67,3 +67,5 @@ export const Image = styled.img`
   border-radius: 5px;
   z-index: -1;
 `;
+
+CardWrapper.displayName = 'CardWrapper';
