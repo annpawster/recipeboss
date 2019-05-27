@@ -26,6 +26,11 @@ const SingleRecipe = props => {
         <CardWrapper>
           <div>
             <Image src={props.recipe.image} alt="recipe" />
+            <ButtonWrapper>
+              <Link to="/">
+                <Button color="info">{'<< View All'}</Button>
+              </Link>
+            </ButtonWrapper>
           </div>
           <div>
             <p>Description: {props.recipe.description}</p>
@@ -42,16 +47,6 @@ const SingleRecipe = props => {
                 recipeInfo={props.recipe}
               />
             ) : null}
-            <ButtonWrapper>
-              <Link to="/">
-                <Button color="info">Go Back</Button>
-              </Link>
-            </ButtonWrapper>
-            <ButtonWrapper>
-              <Button outline color="danger" onClick={removeRecipe}>
-                Delete
-              </Button>
-            </ButtonWrapper>
           </div>
         </CardWrapper>
       </Container>

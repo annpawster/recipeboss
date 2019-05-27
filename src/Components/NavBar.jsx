@@ -4,9 +4,10 @@ import sauceIcon from '../sauce.png';
 import {
   Navbar,
   Container,
-  NavbarBrand,
+  H3,
   Nav,
   NavItem,
+  NavbarBrand,
 } from '@bootstrap-styled/v4';
 import { Link } from 'react-router-dom';
 
@@ -23,9 +24,7 @@ const NavBar = () => {
 
           <Nav navbar className="mr-auto">
             <NavItem>
-              <Link to="/">
-                <NavbarBrand>Home</NavbarBrand>
-              </Link>
+              <NavbarBrand href="/">Home</NavbarBrand>
             </NavItem>
           </Nav>
         </Container>

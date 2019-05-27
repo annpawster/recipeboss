@@ -13,7 +13,6 @@ const getRecipes = recipes => {
 };
 
 const addRecipe = recipe => {
-  console.log('made it to my action creator', recipe);
   return { type: ADD_RECIPE, recipe };
 };
 
@@ -38,8 +37,6 @@ export const gettingAllRecipes = () => dispatch => {
   }
 };
 export const addingARecipe = recipe => dispatch => {
-  console.log('made it to my thunk', recipe);
-
   try {
     dispatch(addRecipe(recipe));
   } catch (err) {
