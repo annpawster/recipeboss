@@ -18,6 +18,7 @@ const NavBar = () => {
         <Container>
           <div className="d-flex justify-content-between">
             <Link to="/">
+
               <Image size="small" alt="sauce" src={sauceIcon} />
             </Link>
           </div>

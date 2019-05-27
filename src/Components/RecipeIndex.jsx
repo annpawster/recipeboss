@@ -106,6 +106,7 @@ export const ButtonWrapper = styled.div`
   position: absolute;
   top: 50%;
   left: 50%;
+  cursor: pointer;
   transform: translate(-50%, -50%);
   background-color: transparent;
   border: none;
