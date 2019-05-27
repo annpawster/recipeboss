@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import RecipeCard from './RecipeCard';
 import styled from 'styled-components';
-import { Button } from '@bootstrap-styled/v4';
+import { Button, ListGroup } from '@bootstrap-styled/v4';
 import { connect } from 'react-redux';
 import { gettingAllRecipes } from '../Store/reducer';
 import AddRecipe from '../Forms/AddRecipe';
@@ -27,7 +27,8 @@ export const RecipeIndex = ({ recipes, ...props }) => {
   };
 
   const allRecipes = props.state;
-  console.log('these are all the recipes', allRecipes);
+  let format;
+  listView === 'grid' ? (format = '') : (format = 'list-group');
   return (
     <Background>
       <HomeWrapper>
@@ -35,14 +36,13 @@ export const RecipeIndex = ({ recipes, ...props }) => {
           <Welcome>
             Welcome to Recipe Boss, <strong>User@RecipeBoss.com</strong>!
           </Welcome>
-          <ButtonWrapper>
-            <Button onClick={viewModal} color="info">
-              Add a Recipe
-            </Button>
+          <ButtonWrapper onClick={viewModal} color="info">
+            Add a Recipe
           </ButtonWrapper>
           <LinkWrapper>
-            <Link onClick={() => viewMode('list')}>List View </Link>||
-            <Link onClick={() => viewMode('grid')}>Grid View</Link>
+            <StyledLink onClick={() => viewMode('list')}>List View </StyledLink>
+            ||
+            <StyledLink onClick={() => viewMode('grid')}> Grid View</StyledLink>
           </LinkWrapper>
           {showModal ? (
             <AddRecipe
@@ -55,21 +55,31 @@ export const RecipeIndex = ({ recipes, ...props }) => {
             src="https://cdn.pixabay.com/photo/2018/10/01/12/04/cookbook-3716009_1280.jpg"
             alt="homepagesalad"
           />
-          <p>Welcome to Recipe Boss!</p>
         </Container>
-        <CardWrapper>
-          {allRecipes
-            ? allRecipes.map((recipe, index) =>
-                recipe && recipe.length !== 0 ? (
-                  listView === 'grid' ? (
-                    <RecipeCard id={index} {...recipe} key={index} />
-                  ) : (
-                    <RecipeList />
-                  )
-                ) : null
-              )
-            : 'Loading...'}
-        </CardWrapper>
+        <strong>You have a total of {allRecipes.length} recipes!</strong>
+        {listView === 'grid' ? (
+          <CardWrapper>
+            {allRecipes
+              ? allRecipes.map((recipe, index) =>
+                  recipe && recipe.length !== 0 ? (
+                    listView === 'grid' ? (
+                      <RecipeCard id={index} {...recipe} key={index} />
+                    ) : (
+                      <RecipeList id={index} {...recipe} key={index} />
+                    )
+                  ) : null
+                )
+              : 'Loading...'}
+          </CardWrapper>
+        ) : (
+          <CardWrapper>
+            <ListGroup>
+              {allRecipes.map((recipe, index) => (
+                <RecipeList id={index} {...recipe} key={index} />
+              ))}
+            </ListGroup>
+          </CardWrapper>
+        )}
       </HomeWrapper>
     </Background>
   );
@@ -91,6 +101,21 @@ export const Background = styled.div`
   background: white;
 `;
 
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: #282828;
+  &:hover {
+    color: #00ccff;
+  }
+
+  &:focus,
+  &:active {
+    color: #0099cc;
+    text-decoration: underline;
+    font-size: 20px;
+  }
+`;
+
 const LinkWrapper = styled.div`
   padding: 15px 45px;
   position: absolute;
@@ -100,7 +125,7 @@ const LinkWrapper = styled.div`
   background-color: transparent;
 `;
 
-export const ButtonWrapper = styled.div`
+export const ButtonWrapper = styled(Button)`
   margin: 1em;
   padding: 15px 45px;
   position: absolute;
