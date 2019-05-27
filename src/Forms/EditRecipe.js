@@ -11,6 +11,7 @@ import {
   FormGroup,
   Label,
   Input,
+  Alert,
 } from '@bootstrap-styled/v4';
 import styled from 'styled-components';
 import ImageSearch from './BingSearch';
@@ -23,9 +24,11 @@ class EditRecipe extends React.Component {
       description: '' || this.props.recipeInfo.description,
       instructions: '' || this.props.recipeInfo.instructions,
       image: '' || this.props.recipeInfo.image,
+      notSubmitted: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.notSubmitted = this.notSubmitted.bind(this);
   }
 
   handleChange(event) {
@@ -49,6 +52,11 @@ class EditRecipe extends React.Component {
     this.props.viewModal();
   }
 
+  notSubmitted() {
+    this.setState({
+      notSubmitted: !this.state.notSubmitted,
+    });
+  }
   render() {
     return (
       <Modal isOpen={this.props.showModal}>
@@ -103,7 +111,20 @@ class EditRecipe extends React.Component {
           </Form>
         </ModalBody>
         <ModalFooter>
-          <Button color="info" onClick={this.onSubmit}>
+          {this.state.notSubmitted ? (
+            <Alert color="danger" uncontrolled>
+              Please make sure you've added a recipe name and image before
+              submitting edits.
+            </Alert>
+          ) : null}
+          <Button
+            color="info"
+            onClick={
+              this.state.name && this.state.image
+                ? this.onSubmit
+                : this.notSubmitted
+            }
+          >
             Submit Changes
           </Button>
           <Button color="secondary" onClick={this.props.viewModal}>
