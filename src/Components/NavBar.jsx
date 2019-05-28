@@ -23,7 +23,9 @@ const NavBar = () => {
 
           <Nav navbar className="mr-auto">
             <NavItem>
-              <NavbarBrand href="/">Home</NavbarBrand>
+              <Link to="/">
+                <NavbarBrand>Home</NavbarBrand>
+              </Link>
             </NavItem>
           </Nav>
         </Container>
