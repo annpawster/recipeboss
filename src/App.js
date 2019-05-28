@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import RecipeIndex from './Components/RecipeIndex';
 import './App.css';
 import NavBar from './Components/NavBar';
-import recipeData from './Components/recipes';
 import { createGlobalStyle } from 'styled-components';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import SingleRecipe from './Components/SingleRecipe';

@@ -18,7 +18,6 @@ const SingleRecipe = props => {
     props.getSingleRecipe(props.location.state);
   }, []);
 
-  const removeRecipe = () => {};
   return props.recipe ? (
     <>
       <Container>

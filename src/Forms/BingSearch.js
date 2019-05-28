@@ -45,16 +45,17 @@ class ImageSearch extends React.Component {
   render() {
     return this.state.images.length > 1 ? (
       <CardWrapper>
+        {' '}
         {this.state.images.map((image, index) => {
           while (index < 9) {
             return (
               <Button onClick={this.props.handleChange} key={index}>
-                <Image src={image} name="image" alt={this.props.search} />
+                <Image src={image} name="image" alt={this.props.search} />{' '}
               </Button>
             );
           }
           return null;
-        })}
+        })}{' '}
       </CardWrapper>
     ) : (
       'Loading images...'

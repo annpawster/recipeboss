@@ -4,7 +4,6 @@ import sauceIcon from '../sauce.png';
 import {
   Navbar,
   Container,
-  H3,
   Nav,
   NavItem,
   NavbarBrand,
@@ -18,7 +17,6 @@ const NavBar = () => {
         <Container>
           <div className="d-flex justify-content-between">
             <Link to="/">
-
               <Image size="small" alt="sauce" src={sauceIcon} />
             </Link>
           </div>
