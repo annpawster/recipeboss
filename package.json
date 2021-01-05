@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@bootstrap-styled/v4": "^3.0.15",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "chai": "^4.2.0",
     "chai-things": "^0.2.0",
     "react": "^16.8.6",
